@@ -13,6 +13,17 @@ sudo bash setup-ssh-ufw.sh
 
 不传参数时，脚本会依次询问要开放的 TCP 端口，以及是否开放 `2096/tcp`；后者默认开放。
 
+## 通过 raw.githubusercontent.com 直接执行
+
+目标服务器已安装 `curl` 和 Bash 时，可不落地保存脚本，直接从 GitHub 获取并运行：
+
+```bash
+# 交互式执行：输入自定义端口，并选择是否开放 2096/tcp
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/topxiao/xiao-scripts/main/setup-ssh-ufw.sh)
+```
+
+不要将交互式模式写成 `curl ... | bash`，因为管道会占用脚本的标准输入，导致无法回答交互提示。
+
 也可以使用非交互模式：
 
 ```bash
@@ -21,6 +32,16 @@ sudo bash setup-ssh-ufw.sh 39412
 
 # 开放 39412/tcp，但不开放 2096/tcp
 sudo bash setup-ssh-ufw.sh 39412 --no-2096
+```
+
+使用 GitHub Raw 地址的非交互模式：
+
+```bash
+# 开放 39412/tcp，并默认开放 2096/tcp
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/topxiao/xiao-scripts/main/setup-ssh-ufw.sh) 39412
+
+# 开放 39412/tcp，但不开放 2096/tcp
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/topxiao/xiao-scripts/main/setup-ssh-ufw.sh) 39412 --no-2096
 ```
 
 ## 脚本行为
